@@ -95,15 +95,37 @@ class myHandler(BaseHTTPRequestHandler):
                 resp = basicSend('tv_power')
             elif rPath[1] == "tv_mute":
                 resp = basicSend('tv_mute')
+
             elif rPath[1] == "candles_on":
                 resp = basicSend('candles_on')
             elif rPath[1] == "candles_off":
                 resp = basicSend('candles_off')
+
+            elif rPath[1] == "white_fan_power":
+                resp = basicSend('white_fan_power')
+            elif rPath[1] == "white_fan_swing":
+                 resp = basicSend('white_fan_swing')
+            elif rPath[1] == "white_fan_speed":
+                 numChanges = int(rPath[2]) % 3
+                 for i in range(numChanges):
+                     resp = basicSend('white_fan_speed')
+
+            elif rPath[1] == "black_fan_power":
+                resp = basicSend('black_fan_power')
+            elif rPath[1] == "black_fan_swing":
+                 resp = basicSend('black_fan_swing')
+            elif rPath[1] == "black_fan_speed":
+                 numChanges = int(rPath[2]) % 3
+                 for i in range(numChanges):
+                     resp = basicSend('black_fan_speed')
+
             else:
                 resp = {'ERROR': 'UNKNOWN ENDPOINT'}
         except IndexError:
             resp = {'ERROR': 'INVALID REQUEST'}
-            
+        except ValueError:
+            resp = {'ERROR': 'SOMETHING WENT WRONG DURING TYPE CONVERSIONS'}
+
         self.wfile.write(json.dumps(resp))
         return
 
